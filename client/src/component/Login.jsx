@@ -1,0 +1,143 @@
+import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleEmailLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post("/api/auth/login", formData);
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred during login");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    // Implement Google OAuth login here
+    window.open(`${process.env.REACT_APP_API_URL}/auth/google`, "_self");
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Welcome Back
+        </h2>
+
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleEmailLogin} className="space-y-6">
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label className="ml-2 block text-sm text-gray-700">
+                Remember me
+              </label>
+            </div>
+            <a
+              href="/forgot-password"
+              className="text-sm text-blue-600 hover:text-blue-500"
+            >
+              Forgot password?
+            </a>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            {isLoading ? "Signing in..." : "Sign in"}
+          </button>
+        </form>
+
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={handleGoogleLogin}
+            className="mt-4 w-full flex items-center justify-center gap-2 py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            <FcGoogle className="text-xl" />
+            Sign in with Google
+          </button>
+        </div>
+
+        <p className="mt-4 text-center text-sm text-gray-600">
+          Don't have an account?{" "}
+          <a href="/register" className="text-blue-600 hover:text-blue-500">
+            Sign up
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
