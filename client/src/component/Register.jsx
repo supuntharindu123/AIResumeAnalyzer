@@ -1,43 +1,41 @@
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
-import { GoogleLogin } from "@react-oauth/google";
 
-const Login = () => {
+const Register = () => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login, googleLogin } = useAuth();
+  const { register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleEmailLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
+    setIsLoading(true);
 
-    const result = await login(formData.email, formData.password);
-    if (!result.success) {
-      setError(result.error);
+    // Validate password match
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setIsLoading(false);
+      return;
     }
-    setIsLoading(false);
-  };
 
-  const handleGoogleSuccess = async (response) => {
     try {
-      setIsLoading(true);
-      setError("");
-      const result = await googleLogin(response.credential);
+      const result = await register(formData);
       if (!result.success) {
         setError(result.error);
       }
     } catch (error) {
-      setError("Google login failed");
+      setError("Registration failed");
     } finally {
       setIsLoading(false);
     }
@@ -47,7 +45,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Welcome Back
+          Create an Account
         </h2>
 
         {error && (
@@ -56,7 +54,22 @@ const Login = () => {
           </div>
         )}
 
-        <form onSubmit={handleEmailLogin} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">
+              Full Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="John Doe"
+            />
+          </div>
+
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-2">
               Email Address
@@ -68,7 +81,7 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
+              placeholder="you@example.com"
             />
           </div>
 
@@ -83,26 +96,25 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
+              placeholder="********"
+              minLength="8"
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label className="ml-2 block text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
-            <a
-              href="/forgot-password"
-              className="text-sm text-blue-600 hover:text-blue-500"
-            >
-              Forgot password?
-            </a>
+          <div>
+            <label className="text-sm font-medium text-gray-700 block mb-2">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="********"
+              minLength="8"
+            />
           </div>
 
           <button
@@ -110,38 +122,19 @@ const Login = () => {
             disabled={isLoading}
             className="w-full py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            {isLoading ? "Signing in..." : "Sign in"}
+            {isLoading ? "Creating Account..." : "Register"}
           </button>
         </form>
 
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => setError("Google login failed")}
-            useOneTap
-          />
-        </div>
-
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
-          <a href="/register" className="text-blue-600 hover:text-blue-500">
-            Sign up
-          </a>
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 hover:text-blue-500">
+            Sign in
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
