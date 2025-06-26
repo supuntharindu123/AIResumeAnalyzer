@@ -1,33 +1,28 @@
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// Create reusable transporter object using the default SMTP transport
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+// Configure environment variables
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
-// Verify connection configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("SMTP connection error:", error);
-  } else {
-    console.log("Server is ready to send emails");
-  }
-});
+const createTransporter = () => {
+  return nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_APP_PASSWORD,
+    },
+  });
+};
+
+const transporter = createTransporter();
 
 export async function sendVerificationEmail(email, otp) {
   try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-      throw new Error("Email configuration is missing");
-    }
-
     const mailOptions = {
-      from: `"AI Resume Analyzer" <${process.env.EMAIL_USER}>`,
+      from: `"AI Resume Analyzer" <${process.env.EMAIL_USERNAME}>`,
       to: email,
       subject: "Email Verification",
       html: `
@@ -38,7 +33,6 @@ export async function sendVerificationEmail(email, otp) {
             <h2 style="color: #1f2937; letter-spacing: 8px;">${otp}</h2>
           </div>
           <p style="color: #6b7280; font-size: 14px;">This code will expire in 5 minutes.</p>
-          <p style="color: #6b7280; font-size: 14px;">If you didn't request this code, please ignore this email.</p>
         </div>
       `,
     };

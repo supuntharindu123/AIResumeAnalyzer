@@ -6,18 +6,18 @@ const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
-    withCredentials: true,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -113,12 +113,11 @@ export const AuthProvider = ({ children }) => {
       });
       console.log("Registration response:", response);
 
-      const { token, user } = response.user;
-      localStorage.setItem("token", token);
-      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const { user } = response.data;
+
       setUser(user);
       console.log(user);
-      navigate("/login");
+      navigate("/verify-email");
       return { success: true };
     } catch (error) {
       console.error("Registration failed:", error);

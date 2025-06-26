@@ -22,7 +22,6 @@ const Register = () => {
     setError("");
     setIsLoading(true);
 
-    // Validate password match
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       setIsLoading(false);
