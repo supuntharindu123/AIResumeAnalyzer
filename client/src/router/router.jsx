@@ -4,6 +4,7 @@ import RegisterPage from "../pages/RegisterPage";
 import DashboardPage from "../pages/dashboardPage";
 import ResumeUploaderPage from "../pages/ResumeUploaderPage";
 import VerifyEmailPage from "../pages/VerifyEmailPage";
+import ForgotPasswordPage from "../pages/forgetPasswordPage";
 import Header from "../component/header";
 import Footer from "../component/footer";
 
@@ -28,6 +29,10 @@ const Routers = () => {
     {
       path: "/verify-email",
       element: <VerifyEmailPage />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPasswordPage />,
     },
   ];
 

@@ -198,9 +198,6 @@ export async function resendOTP(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.isEmailVerified) {
-      return res.status(400).json({ message: "Email already verified" });
-    }
     const otp = generateOTP();
     await OTP.deleteMany({ email });
 
@@ -214,6 +211,39 @@ export async function resendOTP(req, res) {
   } catch (error) {
     console.error("Error in resendOTP:", error);
     res.status(500).json({ message: "Error sending OTP" });
+  }
+}
+
+export async function resetPassword(req, res) {
+  const { email, password } = req.body;
+
+  try {
+    // Find user and verify they exist
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Hash the new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Update user's password
+    user.password = hashedPassword;
+    await user.save();
+
+    // Clear any existing OTP for this user
+    await OTP.deleteMany({ email });
+
+    res.status(200).json({ 
+      message: "Password reset successfully" 
+    });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res.status(500).json({ 
+      message: "Error resetting password",
+      error: error.message 
+    });
   }
 }
 

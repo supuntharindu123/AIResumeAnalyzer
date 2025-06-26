@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi';
-import { useAuth } from '../context/authcontext';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FiMenu, FiX, FiUser, FiLogOut } from "react-icons/fi";
+import { useAuth } from "../context/authcontext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,17 +11,17 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
   const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Dashboard', href: '/dashboard' },
-    { name: 'Upload Resume', href: '/upload-resume' },
-    { name: 'About', href: '/about' },
+    { name: "Home", href: "/" },
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "Upload Resume", href: "/upload-resume" },
+    { name: "About", href: "/about" },
   ];
 
   return (
@@ -31,7 +31,9 @@ const Header = () => {
           {/* Logo and Brand */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-blue-600">AI Resume</span>
+              <span className="text-2xl font-bold text-blue-600">
+                AI Resume
+              </span>
             </Link>
           </div>
 
@@ -48,7 +50,6 @@ const Header = () => {
             ))}
           </div>
 
-          {/* User Menu - Desktop */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">

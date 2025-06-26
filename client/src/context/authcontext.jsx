@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", token);
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setUser(user);
-      navigate("/dashboard"); // Changed from "/" to "/dashboard" for consistency
+      navigate("/dashboard");
       return { success: true };
     } catch (error) {
       console.error(
