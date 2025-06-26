@@ -1,30 +1,30 @@
 import nodemailer from "nodemailer";
 
-// Validate email configuration
-const validateEmailConfig = () => {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
-    throw new Error("Missing email credentials. Please check your .env file");
-  }
-};
-
-// Create transporter with secure configuration
+// Create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
-  secure: false,
+  secure: false, // true for 465, false for other ports
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_APP_PASSWORD,
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD,
   },
-  tls: {
-    rejectUnauthorized: false,
-  },
+});
+
+// Verify connection configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("SMTP connection error:", error);
+  } else {
+    console.log("Server is ready to send emails");
+  }
 });
 
 export async function sendVerificationEmail(email, otp) {
   try {
-    // Validate configuration before sending
-    validateEmailConfig();
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_APP_PASSWORD) {
+      throw new Error("Email configuration is missing");
+    }
 
     const mailOptions = {
       from: `"AI Resume Analyzer" <${process.env.EMAIL_USER}>`,
@@ -44,10 +44,10 @@ export async function sendVerificationEmail(email, otp) {
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully. Message ID:", info.messageId);
+    console.log("Email sent successfully:", info.messageId);
     return info;
   } catch (error) {
-    console.error("Error sending email:", error.message);
-    throw new Error(`Failed to send verification email: ${error.message}`);
+    console.error("Error sending email:", error);
+    throw error;
   }
 }

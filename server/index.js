@@ -3,7 +3,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utill/db.js";
 import router from "./router.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config();
 
 const app = express();

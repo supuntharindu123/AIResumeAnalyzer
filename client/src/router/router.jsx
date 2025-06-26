@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import DashboardPage from "../pages/dashboardPage";
+import ResumeUploaderPage from "../pages/ResumeUploaderPage";
 
 const Routers = () => {
   const routers = [
     {
-      path: "/",
-      element: <h1>Home Page</h1>,
+      path: "/dashboard",
+      element: <DashboardPage />,
     },
     {
       path: "/register",
@@ -15,6 +17,10 @@ const Routers = () => {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/upload-resume",
+      element: <ResumeUploaderPage />,
     },
   ];
 

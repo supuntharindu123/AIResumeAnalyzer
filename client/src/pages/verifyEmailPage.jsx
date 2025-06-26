@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/authcontext';
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authcontext";
 
 const VerifyEmailPage = () => {
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [countdown, setCountdown] = useState(300); // 5 minutes
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // 5 minutes
   const location = useLocation();
   const navigate = useNavigate();
   const { verifyEmail, resendOTP } = useAuth();
@@ -14,7 +13,7 @@ const VerifyEmailPage = () => {
 
   useEffect(() => {
     if (!email) {
-      navigate('/register');
+      navigate("/register");
     }
   }, [email, navigate]);
 
@@ -40,7 +39,7 @@ const VerifyEmailPage = () => {
   };
 
   const handleKeyDown = (index, e) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
       const prevInput = document.getElementById(`otp-${index - 1}`);
       prevInput?.focus();
     }
@@ -48,18 +47,18 @@ const VerifyEmailPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
-      const result = await verifyEmail(email, otp.join(''));
+      const result = await verifyEmail(email, otp.join(""));
       if (result.success) {
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
         setError(result.error);
       }
     } catch (err) {
-      setError('Failed to verify email');
+      setError("Failed to verify email");
     } finally {
       setLoading(false);
     }
@@ -67,10 +66,10 @@ const VerifyEmailPage = () => {
 
   const handleResend = async () => {
     if (countdown > 0) return;
-    
-    setError('');
+
+    setError("");
     setLoading(true);
-    
+
     try {
       const result = await resendOTP(email);
       if (result.success) {
@@ -79,7 +78,7 @@ const VerifyEmailPage = () => {
         setError(result.error);
       }
     } catch (err) {
-      setError('Failed to resend OTP');
+      setError("Failed to resend OTP");
     } finally {
       setLoading(false);
     }
@@ -93,7 +92,8 @@ const VerifyEmailPage = () => {
         </h2>
 
         <p className="text-center text-gray-600 mb-6">
-          Please enter the verification code sent to<br />
+          Please enter the verification code sent to
+          <br />
           <span className="font-medium">{email}</span>
         </p>
 
@@ -122,10 +122,10 @@ const VerifyEmailPage = () => {
 
           <button
             type="submit"
-            disabled={loading || otp.some(digit => !digit)}
+            disabled={loading || otp.some((digit) => !digit)}
             className="w-full py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
           >
-            {loading ? 'Verifying...' : 'Verify Email'}
+            {loading ? "Verifying..." : "Verify Email"}
           </button>
         </form>
 
@@ -135,10 +135,11 @@ const VerifyEmailPage = () => {
             disabled={countdown > 0 || loading}
             className="text-blue-600 hover:text-blue-500 disabled:text-gray-400"
           >
-            {countdown > 0 
-              ? `Resend code in ${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, '0')}`
-              : 'Resend verification code'
-            }
+            {countdown > 0
+              ? `Resend code in ${Math.floor(countdown / 60)}:${(countdown % 60)
+                  .toString()
+                  .padStart(2, "0")}`
+              : "Resend verification code"}
           </button>
         </div>
       </div>
