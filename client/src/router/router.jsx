@@ -7,12 +7,28 @@ import VerifyEmailPage from "../pages/VerifyEmailPage";
 import ForgotPasswordPage from "../pages/forgetPasswordPage";
 import Header from "../component/header";
 import Footer from "../component/footer";
+import { useAuth } from "../context/authcontext";
+import PrivateRoute from "./privateroute";
+import ProfilePage from "../pages/profilePage";
 
 const Routers = () => {
+  const auth = useAuth();
   const routers = [
     {
       path: "/dashboard",
-      element: <DashboardPage />,
+      element: (
+        <PrivateRoute>
+          <DashboardPage />
+        </PrivateRoute>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+        <PrivateRoute>
+          <ProfilePage />
+        </PrivateRoute>
+      ),
     },
     {
       path: "/register",
@@ -24,7 +40,11 @@ const Routers = () => {
     },
     {
       path: "/upload-resume",
-      element: <ResumeUploaderPage />,
+      element: (
+        <PrivateRoute>
+          <ResumeUploaderPage />
+        </PrivateRoute>
+      ),
     },
     {
       path: "/verify-email",
@@ -39,6 +59,7 @@ const Routers = () => {
   return (
     <div>
       <Header />
+
       <Routes>
         {routers.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />

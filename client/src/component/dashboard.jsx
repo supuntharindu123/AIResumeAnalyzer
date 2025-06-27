@@ -1,21 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FiUpload, FiFileText, FiUsers, FiActivity } from 'react-icons/fi';
-import { useAuth } from '../context/authcontext';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FiUpload, FiFileText, FiUsers, FiActivity } from "react-icons/fi";
+import { useAuth } from "../context/authcontext";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
     totalResumes: 0,
     analyzedResumes: 0,
     pendingReviews: 0,
-    recentActivity: []
+    recentActivity: [],
   });
   const { user } = useAuth();
-
-  useEffect(() => {
-    // TODO: Fetch dashboard stats from API
-    // This is where you'll make API calls to get the statistics
-  }, []);
 
   const DashboardCard = ({ title, value, icon, color }) => (
     <div className="bg-white rounded-lg shadow-md p-6">
@@ -24,9 +19,7 @@ const Dashboard = () => {
           <p className="text-gray-500 text-sm">{title}</p>
           <h3 className="text-2xl font-bold mt-2">{value}</h3>
         </div>
-        <div className={`p-3 rounded-full ${color}`}>
-          {icon}
-        </div>
+        <div className={`p-3 rounded-full ${color}`}>{icon}</div>
       </div>
     </div>
   );
@@ -42,7 +35,7 @@ const Dashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Link 
+          <Link
             to="/upload-resume"
             className="bg-blue-600 text-white rounded-lg p-6 hover:bg-blue-700 transition"
           >
@@ -50,12 +43,14 @@ const Dashboard = () => {
               <FiUpload className="text-2xl mr-4" />
               <div>
                 <h3 className="font-bold text-lg">Upload New Resume</h3>
-                <p className="text-blue-100">Get instant feedback on your resume</p>
+                <p className="text-blue-100">
+                  Get instant feedback on your resume
+                </p>
               </div>
             </div>
           </Link>
-          
-          <Link 
+
+          <Link
             to="/my-reviews"
             className="bg-green-600 text-white rounded-lg p-6 hover:bg-green-700 transition"
           >
@@ -63,7 +58,9 @@ const Dashboard = () => {
               <FiFileText className="text-2xl mr-4" />
               <div>
                 <h3 className="font-bold text-lg">View My Reviews</h3>
-                <p className="text-green-100">Check your resume analysis history</p>
+                <p className="text-green-100">
+                  Check your resume analysis history
+                </p>
               </div>
             </div>
           </Link>
@@ -71,19 +68,19 @@ const Dashboard = () => {
 
         {/* Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <DashboardCard 
+          <DashboardCard
             title="Total Resumes"
             value={stats.totalResumes}
             icon={<FiFileText className="text-2xl" />}
             color="bg-blue-100 text-blue-600"
           />
-          <DashboardCard 
+          <DashboardCard
             title="Analyzed"
             value={stats.analyzedResumes}
             icon={<FiActivity className="text-2xl" />}
             color="bg-green-100 text-green-600"
           />
-          <DashboardCard 
+          <DashboardCard
             title="Pending Reviews"
             value={stats.pendingReviews}
             icon={<FiUsers className="text-2xl" />}
@@ -101,13 +98,19 @@ const Dashboard = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="font-medium">{activity.title}</p>
-                      <p className="text-sm text-gray-500">{activity.timestamp}</p>
+                      <p className="text-sm text-gray-500">
+                        {activity.timestamp}
+                      </p>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-sm ${
-                      activity.status === 'completed' ? 'bg-green-100 text-green-600' : 
-                      activity.status === 'pending' ? 'bg-yellow-100 text-yellow-600' : 
-                      'bg-red-100 text-red-600'
-                    }`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm ${
+                        activity.status === "completed"
+                          ? "bg-green-100 text-green-600"
+                          : activity.status === "pending"
+                          ? "bg-yellow-100 text-yellow-600"
+                          : "bg-red-100 text-red-600"
+                      }`}
+                    >
                       {activity.status}
                     </span>
                   </div>

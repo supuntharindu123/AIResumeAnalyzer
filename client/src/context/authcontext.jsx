@@ -17,6 +17,9 @@ export const api = axios.create({
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [token, settoken] = useState(() => {
+    localStorage.getItem("token");
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,8 +34,9 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await api.get("/auth/verify");
-      setUser(response.data.user);
+      const response = await api.get(`/auth/verify`);
+
+      setUser(response?.data?.user);
     } catch (error) {
       console.error("Auth verification failed:", error);
       localStorage.removeItem("token");
@@ -50,8 +54,9 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
-      const { token, user } = response.data;
+      const { token, user } = response?.data;
       localStorage.setItem("token", token);
+
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setUser(user);
       navigate("/dashboard");
@@ -71,12 +76,13 @@ export const AuthProvider = ({ children }) => {
         credential,
       });
 
-      const { token, user } = response.data;
+      const { token, user } = response?.data;
       if (!token || !user) {
         throw new Error("Invalid response from server");
       }
 
       localStorage.setItem("token", token);
+
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setUser(user);
       navigate("/dashboard");
@@ -96,6 +102,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     try {
       localStorage.removeItem("token");
+
       delete api.defaults.headers.common["Authorization"];
       setUser(null);
       navigate("/login");
@@ -107,13 +114,13 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const response = await api.post("/auth/register", {
-        name: userData.name,
-        email: userData.email,
-        password: userData.password,
+        name: userData?.name,
+        email: userData?.email,
+        password: userData?.password,
       });
       console.log("Registration response:", response);
 
-      const { user } = response.data;
+      const { user } = response?.data;
 
       setUser(user);
       console.log(user);

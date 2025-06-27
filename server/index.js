@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import path from "path";
+import fs from "fs";
 
 // Configure environment variables first
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +22,13 @@ app.use(
   })
 );
 app.use(express.json());
+
+const uploaddir = path.join("uploads");
+if (!fs.existsSync(uploaddir)) {
+  fs.mkdirSync(uploaddir, { recursive: true });
+  console.log("Uploads directory created successfully");
+}
+app.use("/uploads", express.static("uploads"));
 
 app.use("/api", router);
 

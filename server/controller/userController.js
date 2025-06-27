@@ -10,7 +10,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 // Generate JWT Token
 const generateToken = (user) => {
   return jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "2d",
   });
 };
 
@@ -18,7 +18,29 @@ const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Email Password Login
+export async function getMe(req, res) {
+  const id = req.user._id;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({
+      user: {
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        isEmailVerified: user.isEmailVerified,
+        bio: user.bio,
+      },
+      message: "Get User Details Successfull!",
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Error fetching user details" });
+  }
+}
+
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -40,6 +62,9 @@ export const loginUser = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        avatar: user.avatar,
+        isEmailVerified: user.isEmailVerified,
+        bio: user.bio,
       },
     });
   } catch (error) {
@@ -99,6 +124,8 @@ export const googleLogin = async (req, res) => {
         name: user.name,
         email: user.email,
         avatar: user.avatar,
+        isEmailVerified: user.isEmailVerified,
+        bio: user.bio,
       },
     });
   } catch (error) {
@@ -145,6 +172,9 @@ export async function registerUser(req, res) {
         id: user._id,
         name: user.name,
         email: user.email,
+        avatar: user.avatar,
+        isEmailVerified: user.isEmailVerified,
+        bio: user.bio,
       },
     });
   } catch (error) {
@@ -182,6 +212,9 @@ export async function verifyEmail(req, res) {
         id: user._id,
         name: user.name,
         email: user.email,
+        avatar: user.avatar,
+        isEmailVerified: user.isEmailVerified,
+        bio: user.bio,
       },
     });
   } catch (error) {
@@ -218,31 +251,27 @@ export async function resetPassword(req, res) {
   const { email, password } = req.body;
 
   try {
-    // Find user and verify they exist
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Hash the new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Update user's password
     user.password = hashedPassword;
     await user.save();
 
-    // Clear any existing OTP for this user
     await OTP.deleteMany({ email });
 
-    res.status(200).json({ 
-      message: "Password reset successfully" 
+    res.status(200).json({
+      message: "Password reset successfully",
     });
   } catch (error) {
     console.error("Error resetting password:", error);
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Error resetting password",
-      error: error.message 
+      error: error.message,
     });
   }
 }
@@ -259,3 +288,38 @@ export const getUserById = async (req, res) => {
     res.status(500).json({ message: "Error fetching user" });
   }
 };
+
+export async function updateUser(req, res) {
+  try {
+    const userId = req.user._id;
+    const { name, bio } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        name,
+        bio,
+      },
+      { new: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        bio: user.bio,
+        isEmailVerified: user.isEmailVerified,
+      },
+      message: "Profile updated successfully",
+    });
+  } catch (error) {
+    console.error("Update user error:", error);
+    res.status(500).json({ message: "Error updating user" });
+  }
+}

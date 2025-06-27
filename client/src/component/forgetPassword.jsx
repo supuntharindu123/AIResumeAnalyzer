@@ -308,17 +308,16 @@ const ForgotPassword = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          {getHeaderText()}
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          {getSubHeaderText()}
-        </p>
-      </div>
-
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="sm:mx-auto sm:w-full sm:max-w-md mb-8">
+            <h2 className="my-6 text-center text-3xl font-extrabold text-gray-900">
+              {getHeaderText()}
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              {getSubHeaderText()}
+            </p>
+          </div>
           {error && (
             <div className="rounded-md bg-red-50 p-4 mb-4">
               <p className="text-sm text-red-700">{error}</p>

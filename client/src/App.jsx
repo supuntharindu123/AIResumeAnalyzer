@@ -4,13 +4,7 @@ import Routers from "./router/router";
 import "./App.css";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routers />
-      </AuthProvider>
-    </BrowserRouter>
-  );
+  return <Routers />;
 }
 
 export default App;
