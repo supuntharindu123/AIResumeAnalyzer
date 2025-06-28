@@ -25,13 +25,13 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-md">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          {/* Logo and Brand */}
+          {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold text-blue-600">
+              <span className="text-2xl font-extrabold bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
                 AI Resume
               </span>
             </Link>
@@ -43,28 +43,29 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+                className="text-gray-700 hover:text-rose-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 {item.name}
               </Link>
             ))}
           </div>
 
+          {/* User Actions */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
                 <Link
                   to="/profile"
-                  className="flex items-center text-gray-600 hover:text-blue-600"
+                  className="flex items-center text-gray-700 hover:text-rose-600 transition-colors"
                 >
-                  <FiUser className="mr-2" />
+                  <FiUser className="mr-1" />
                   {user.name}
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center text-gray-600 hover:text-red-600"
+                  className="flex items-center text-gray-700 hover:text-amber-500 transition-colors"
                 >
-                  <FiLogOut className="mr-2" />
+                  <FiLogOut className="mr-1" />
                   Logout
                 </button>
               </div>
@@ -72,13 +73,13 @@ const Header = () => {
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-blue-600 hover:text-blue-700 px-3 py-2"
+                  className="text-rose-600 hover:text-rose-700 font-medium px-3 py-2"
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                  className="bg-amber-400 text-gray-900 px-4 py-2 rounded-md font-semibold hover:bg-amber-300 transition"
                 >
                   Sign Up
                 </Link>
@@ -86,11 +87,11 @@ const Header = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-600 hover:text-blue-600 p-2"
+              className="text-gray-700 hover:text-rose-600 p-2"
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -99,14 +100,14 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="md:hidden mt-2">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gradient-to-b from-rose-50 to-amber-50 rounded-lg shadow">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                   onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-white hover:text-rose-600 transition"
                 >
                   {item.name}
                 </Link>
@@ -115,8 +116,8 @@ const Header = () => {
                 <>
                   <Link
                     to="/profile"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-white hover:text-rose-600 transition"
                   >
                     Profile
                   </Link>
@@ -125,7 +126,7 @@ const Header = () => {
                       handleLogout();
                       setIsOpen(false);
                     }}
-                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50"
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-white hover:text-amber-500 transition"
                   >
                     Logout
                   </button>
@@ -134,15 +135,15 @@ const Header = () => {
                 <>
                   <Link
                     to="/login"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-rose-600 hover:bg-white hover:text-rose-700 transition"
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                     onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 bg-amber-400 hover:bg-amber-300 transition"
                   >
                     Sign Up
                   </Link>

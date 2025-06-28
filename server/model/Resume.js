@@ -6,6 +6,10 @@ const ResumeSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  fileOriginalName: {
+    type: String,
+    required: true,
+  },
   fileName: {
     type: String,
     required: true,

@@ -11,7 +11,7 @@ const ResumeUploader = () => {
   const navigate = useNavigate();
 
   const onDrop = useCallback((acceptedFiles) => {
-    const allowedTypes = ['application/pdf'];
+    const allowedTypes = ["application/pdf"];
     const file = acceptedFiles[0];
 
     if (!allowedTypes.includes(file?.type)) {
@@ -23,7 +23,7 @@ const ResumeUploader = () => {
       {
         file,
         name: file.name,
-        size: (file.size / 1024 / 1024).toFixed(2), // Convert to MB
+        size: (file.size / 1024 / 1024).toFixed(2), // MB
       },
     ]);
     setError("");
@@ -32,12 +32,19 @@ const ResumeUploader = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'application/pdf': ['.pdf']
+      "application/pdf": [".pdf"],
     },
     maxFiles: 1,
   });
 
-  const removeFile = () => {
+  const openFileInBrowser = () => {
+    if (files[0]?.url) {
+      window.open(files[0].url, "_blank", "noopener,noreferrer");
+    }
+  };
+
+  const removeFile = (e) => {
+    e.stopPropagation();
     setFiles([]);
   };
 
@@ -46,7 +53,6 @@ const ResumeUploader = () => {
       setError("Please upload your resume");
       return;
     }
-
     if (!jobDescription.trim()) {
       setError("Please enter a job description");
       return;
@@ -68,9 +74,7 @@ const ResumeUploader = () => {
         },
       });
 
-      if (!response.ok) {
-        throw new Error("Analysis failed");
-      }
+      if (!response.ok) throw new Error("Analysis failed");
 
       const data = await response.json();
       navigate(`/analysis/${data.id}`);
@@ -82,72 +86,81 @@ const ResumeUploader = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 p-6">
       <div className="max-w-5xl mx-auto">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          <h1 className="text-4xl font-extrabold text-rose-600 mb-4">
             Resume Match Analysis
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-rose-700">
             Upload your resume and job description to see how well they match
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Resume Upload Section */}
+          {/* Resume Upload */}
           <div className="bg-white rounded-xl shadow-xl p-8">
             <div className="flex items-center mb-6">
-              <FiFile className="text-2xl text-blue-600 mr-3" />
-              <h2 className="text-2xl font-semibold">Upload Resume</h2>
+              <FiFile className="text-2xl text-rose-600 mr-3" />
+              <h2 className="text-2xl font-semibold text-rose-700">
+                Upload Resume
+              </h2>
             </div>
 
-            {/* Dropzone */}
             <div
               {...getRootProps()}
               className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
                 isDragActive
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300 hover:border-blue-500"
+                  ? "border-rose-400 bg-rose-50"
+                  : "border-rose-300 hover:border-rose-400"
               }`}
             >
               <input {...getInputProps()} />
-              <FiUpload className="mx-auto text-3xl text-gray-400 mb-4" />
-              <p className="text-gray-600">
+              <FiUpload className="mx-auto text-3xl text-rose-300 mb-4" />
+              <p className="text-rose-600">
                 {isDragActive
                   ? "Drop your resume here"
                   : "Drag & drop your resume PDF, or click to select"}
               </p>
-              <p className="text-sm text-gray-500 mt-2">Maximum file size: 10MB</p>
+              <p className="text-sm text-rose-400 mt-2">
+                Maximum file size: 10MB
+              </p>
             </div>
 
-            {/* File List */}
             {files.length > 0 && (
-              <div className="mt-4">
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <button onClick={openFileInBrowser} className="w-full mt-4">
+                <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg cursor-pointer hover:bg-rose-100 transition">
                   <div className="flex items-center">
-                    <FiFile className="text-blue-600 mr-2" />
+                    <FiFile className="text-rose-600 mr-2" />
                     <div>
-                      <p className="text-sm font-medium">{files[0].name}</p>
-                      <p className="text-xs text-gray-500">{files[0].size} MB</p>
+                      <p className="text-sm font-medium text-rose-700">
+                        {files[0].name}
+                      </p>
+                      <p className="text-xs text-rose-400">
+                        {files[0].size} MB
+                      </p>
                     </div>
                   </div>
                   <button
                     onClick={removeFile}
-                    className="p-1 hover:bg-gray-200 rounded-full transition-colors"
+                    className="p-1 hover:bg-rose-200 rounded-full transition-colors"
+                    aria-label="Remove file"
                   >
-                    <FiX className="text-gray-500" />
+                    <FiX className="text-rose-500" />
                   </button>
                 </div>
-              </div>
+              </button>
             )}
           </div>
 
-          {/* Job Description Section */}
+          {/* Job Description */}
           <div className="bg-white rounded-xl shadow-xl p-8">
             <div className="flex items-center mb-6">
-              <FiBriefcase className="text-2xl text-blue-600 mr-3" />
-              <h2 className="text-2xl font-semibold">Job Description</h2>
+              <FiBriefcase className="text-2xl text-rose-600 mr-3" />
+              <h2 className="text-2xl font-semibold text-rose-700">
+                Job Description
+              </h2>
             </div>
 
             <div className="relative">
@@ -155,9 +168,9 @@ const ResumeUploader = () => {
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 placeholder="Paste the job description here..."
-                className="w-full h-[300px] p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500"
+                className="w-full h-[300px] p-4 border-2 border-rose-200 rounded-lg focus:border-rose-500 focus:ring-rose-500 resize-none"
               />
-              <div className="absolute bottom-4 right-4 text-gray-400 text-sm">
+              <div className="absolute bottom-4 right-4 text-rose-400 text-sm select-none">
                 {jobDescription.length} characters
               </div>
             </div>
@@ -166,50 +179,28 @@ const ResumeUploader = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-600">{error}</p>
+          <div className="mt-6 p-4 bg-rose-100 border border-rose-300 rounded-lg">
+            <p className="text-rose-700">{error}</p>
           </div>
         )}
 
-        {/* Analysis Features */}
-        <div className="grid md:grid-cols-3 gap-6 mt-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <FiSearch className="text-3xl text-blue-600 mb-3" />
-            <h3 className="font-semibold mb-2">Keyword Analysis</h3>
-            <p className="text-gray-600 text-sm">
-              Identifies matching keywords and skills
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <FiFile className="text-3xl text-blue-600 mb-3" />
-            <h3 className="font-semibold mb-2">Format Check</h3>
-            <p className="text-gray-600 text-sm">
-              Ensures your resume follows best practices
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <FiBriefcase className="text-3xl text-blue-600 mb-3" />
-            <h3 className="font-semibold mb-2">Match Score</h3>
-            <p className="text-gray-600 text-sm">
-              Calculate job fit percentage
-            </p>
-          </div>
-        </div>
-
         {/* Submit Button */}
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex justify-end">
           <button
             onClick={handleSubmit}
             disabled={files.length === 0 || !jobDescription || uploading}
             className={`px-8 py-4 rounded-xl flex items-center space-x-3 ${
               files.length === 0 || !jobDescription || uploading
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-            } text-white font-medium text-lg shadow-lg transform transition hover:scale-105`}
+                ? "bg-rose-200 cursor-not-allowed text-rose-400"
+                : "bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white shadow-lg transform transition hover:scale-105"
+            } font-medium text-lg`}
           >
             {uploading ? (
               <>
-                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  viewBox="0 0 24 24"
+                >
                   <circle
                     className="opacity-25"
                     cx="12"

@@ -68,11 +68,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           {/* Profile Header */}
-          <div className="relative h-48 bg-blue-600">
+          <div className="relative h-48 bg-gradient-to-r from-rose-700 via-rose-600 to-amber-700">
             <div className="absolute -bottom-12 left-8">
               <div className="relative">
                 <img
@@ -82,7 +82,7 @@ const Profile = () => {
                 />
                 {editMode && (
                   <label className="absolute bottom-0 right-0 bg-white rounded-full p-2 cursor-pointer shadow-lg">
-                    <FiUpload className="w-4 h-4 text-gray-600" />
+                    <FiUpload className="w-4 h-4 text-rose-600" />
                     <input
                       type="file"
                       className="hidden"
@@ -95,7 +95,7 @@ const Profile = () => {
             </div>
             <button
               onClick={() => setEditMode(!editMode)}
-              className="absolute top-4 right-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-md flex items-center gap-2"
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-md flex items-center gap-2 transition"
             >
               <FiEdit2 className="w-4 h-4" />
               {editMode ? "Cancel" : "Edit Profile"}
@@ -105,12 +105,12 @@ const Profile = () => {
           {/* Profile Content */}
           <div className="pt-16 pb-8 px-8">
             {error && (
-              <div className="mb-4 p-4 bg-red-50 text-red-700 rounded-md">
+              <div className="mb-4 p-4 bg-rose-100 text-rose-700 rounded-md">
                 {error}
               </div>
             )}
             {success && (
-              <div className="mb-4 p-4 bg-green-50 text-green-700 rounded-md">
+              <div className="mb-4 p-4 bg-amber-100 text-amber-700 rounded-md">
                 {success}
               </div>
             )}
@@ -118,12 +118,12 @@ const Profile = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-rose-800">
                     Full Name
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                      <FiUser className="text-gray-400" />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <FiUser className="text-rose-400" />
                     </div>
                     <input
                       type="text"
@@ -131,32 +131,32 @@ const Profile = () => {
                       value={formData.name}
                       onChange={handleChange}
                       disabled={!editMode}
-                      className="pl-10 block w-full rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50"
+                      className="pl-10 block w-full rounded-md border border-rose-300 focus:ring-rose-500 focus:border-rose-500 disabled:bg-rose-50 disabled:text-rose-400"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-rose-800">
                     Email
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                      <FiMail className="text-gray-400" />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <FiMail className="text-rose-400" />
                     </div>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       disabled
-                      className="pl-10 block w-full rounded-md border-gray-300 bg-gray-50"
+                      className="pl-10 block w-full rounded-md border border-rose-300 bg-rose-50 text-rose-600 cursor-not-allowed"
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-rose-800">
                   Bio
                 </label>
                 <div className="mt-1">
@@ -166,7 +166,7 @@ const Profile = () => {
                     value={formData.bio}
                     onChange={handleChange}
                     disabled={!editMode}
-                    className="block w-full rounded-md border-gray-300 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-50"
+                    className="block w-full rounded-md border border-rose-300 focus:ring-rose-500 focus:border-rose-500 disabled:bg-rose-50 disabled:text-rose-400"
                   />
                 </div>
               </div>
@@ -176,7 +176,7 @@ const Profile = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+                    className="bg-rose-600 text-white px-6 py-2 rounded-md hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50 transition"
                   >
                     {loading ? "Saving..." : "Save Changes"}
                   </button>

@@ -11,10 +11,8 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  console.log("User in VerifyEmail:", user);
-
   useEffect(() => {
-    if (!user?.email || null) {
+    if (!user?.email) {
       navigate("/register");
       return;
     }
@@ -32,14 +30,12 @@ const VerifyEmail = () => {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       document.getElementById(`otp-${index + 1}`).focus();
     }
   };
 
   const handleKeyDown = (index, e) => {
-    // Handle backspace
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       document.getElementById(`otp-${index - 1}`).focus();
     }
@@ -66,7 +62,6 @@ const VerifyEmail = () => {
 
   const handleResend = async () => {
     if (timer > 0) return;
-
     setError("");
     setLoading(true);
 
@@ -77,7 +72,7 @@ const VerifyEmail = () => {
       } else {
         setError(result.error);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to resend OTP");
     } finally {
       setLoading(false);
@@ -85,29 +80,31 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-6 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-rose-700">
                 Verify Your Email
               </h2>
-              <p className="mt-2 text-center text-sm text-gray-600">
+              <p className="mt-2 text-center text-sm text-rose-600">
                 We sent a verification code to{" "}
-                <span className="font-medium text-blue-600">{user?.email}</span>
+                <span className="font-medium text-amber-600">
+                  {user?.email}
+                </span>
               </p>
             </div>
             {error && (
-              <div className="rounded-md bg-red-50 p-4">
-                <p className="text-sm text-red-700">{error}</p>
+              <div className="rounded-md bg-rose-100 p-4 mt-4">
+                <p className="text-sm text-rose-700">{error}</p>
               </div>
             )}
 
             <div>
               <label
                 htmlFor="otp"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-rose-700"
               >
                 Enter verification code
               </label>
@@ -123,7 +120,7 @@ const VerifyEmail = () => {
                     value={digit}
                     onChange={(e) => handleChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className="w-12 h-12 text-center text-xl font-semibold border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-12 h-12 text-center text-xl font-semibold border rounded-lg focus:ring-2 focus:ring-rose-500 focus:outline-none"
                     required
                   />
                 ))}
@@ -134,7 +131,7 @@ const VerifyEmail = () => {
               <button
                 type="submit"
                 disabled={loading || otp.some((digit) => !digit)}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Verifying..." : "Verify Email"}
               </button>
@@ -145,7 +142,7 @@ const VerifyEmail = () => {
                 type="button"
                 onClick={handleResend}
                 disabled={timer > 0 || loading}
-                className="text-sm text-blue-600 hover:text-blue-500 disabled:text-gray-400"
+                className="text-sm text-rose-600 hover:text-rose-500 disabled:text-gray-400"
               >
                 {timer > 0
                   ? `Resend code in ${Math.floor(timer / 60)}:${(timer % 60)
@@ -159,10 +156,10 @@ const VerifyEmail = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-rose-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
+                <span className="px-2 bg-white text-rose-500">
                   Already verified?
                 </span>
               </div>
@@ -171,7 +168,7 @@ const VerifyEmail = () => {
             <div className="mt-6 text-center">
               <Link
                 to="/login"
-                className="font-medium text-blue-600 hover:text-blue-500"
+                className="font-medium text-rose-600 hover:text-rose-500"
               >
                 Sign in to your account
               </Link>

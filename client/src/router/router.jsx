@@ -11,10 +11,18 @@ import { useAuth } from "../context/authcontext";
 import PrivateRoute from "./privateroute";
 import ProfilePage from "../pages/profilePage";
 import AnalysisResultsPage from "../pages/AnalysisResultsPage";
+import HomePage from "../pages/homePage";
+import AboutPage from "../pages/aboutPage";
+import ResumePage from "../pages/ResumePage";
+import FaqPage from "../pages/FaqPage";
 
 const Routers = () => {
   const auth = useAuth();
   const routers = [
+    {
+      path: "/",
+      element: <HomePage />,
+    },
     {
       path: "/dashboard",
       element: (
@@ -62,6 +70,18 @@ const Routers = () => {
           <AnalysisResultsPage />
         </PrivateRoute>
       ),
+    },
+    {
+      path: "/about",
+      element: <AboutPage />,
+    },
+    {
+      path: "/my-reviews",
+      element: <ResumePage />,
+    },
+    {
+      path: "/faq",
+      element: <FaqPage />,
     },
   ];
 
