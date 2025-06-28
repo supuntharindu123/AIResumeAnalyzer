@@ -10,6 +10,7 @@ import Footer from "../component/footer";
 import { useAuth } from "../context/authcontext";
 import PrivateRoute from "./privateroute";
 import ProfilePage from "../pages/profilePage";
+import AnalysisResultsPage from "../pages/AnalysisResultsPage";
 
 const Routers = () => {
   const auth = useAuth();
@@ -53,6 +54,14 @@ const Routers = () => {
     {
       path: "/forgot-password",
       element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/analysis/:id",
+      element: (
+        <PrivateRoute>
+          <AnalysisResultsPage />
+        </PrivateRoute>
+      ),
     },
   ];
 

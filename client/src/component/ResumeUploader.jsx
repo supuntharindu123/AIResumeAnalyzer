@@ -11,42 +11,35 @@ const ResumeUploader = () => {
   const navigate = useNavigate();
 
   const onDrop = useCallback((acceptedFiles) => {
-    setError("");
-    const validFiles = acceptedFiles.filter(
-      (file) =>
-        file.type === "application/pdf" ||
-        file.type === "application/msword" ||
-        file.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    );
+    const allowedTypes = ['application/pdf'];
+    const file = acceptedFiles[0];
 
-    if (validFiles.length !== acceptedFiles.length) {
-      setError("Only PDF and Word documents are allowed");
+    if (!allowedTypes.includes(file?.type)) {
+      setError("Please upload a PDF file");
+      return;
     }
 
-    setFiles(
-      validFiles.map((file) => ({
+    setFiles([
+      {
         file,
-        preview: URL.createObjectURL(file),
         name: file.name,
-        size: file.size,
-        uploading: false,
-        progress: 0,
-        error: null,
-      }))
-    );
+        size: (file.size / 1024 / 1024).toFixed(2), // Convert to MB
+      },
+    ]);
+    setError("");
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "application/pdf": [".pdf"],
-      "application/msword": [".doc"],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        [".docx"],
+      'application/pdf': ['.pdf']
     },
-    multiple: false,
+    maxFiles: 1,
   });
+
+  const removeFile = () => {
+    setFiles([]);
+  };
 
   const handleSubmit = async () => {
     if (files.length === 0) {
@@ -88,16 +81,6 @@ const ResumeUploader = () => {
     }
   };
 
-  const removeFile = (index) => {
-    setFiles((files) => files.filter((_, i) => i !== index));
-    setError("");
-  };
-
-  const openFileInNewWindow = (file) => {
-    const fileUrl = URL.createObjectURL(file.file);
-    window.open(fileUrl, '_blank', 'noopener,noreferrer');
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6">
       <div className="max-w-5xl mx-auto">
@@ -122,62 +105,40 @@ const ResumeUploader = () => {
             {/* Dropzone */}
             <div
               {...getRootProps()}
-              className={`border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors
-                ${
-                  isDragActive
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300 hover:border-blue-500"
-                }`}
+              className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+                isDragActive
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-300 hover:border-blue-500"
+              }`}
             >
               <input {...getInputProps()} />
-              <FiUpload className="mx-auto text-4xl text-gray-400 mb-4" />
-              <p className="text-xl text-gray-600 mb-2">
+              <FiUpload className="mx-auto text-3xl text-gray-400 mb-4" />
+              <p className="text-gray-600">
                 {isDragActive
                   ? "Drop your resume here"
-                  : "Drag & drop your resume here"}
+                  : "Drag & drop your resume PDF, or click to select"}
               </p>
-              <p className="text-sm text-gray-500">
-                or click to select file (PDF, DOC, DOCX)
-              </p>
+              <p className="text-sm text-gray-500 mt-2">Maximum file size: 10MB</p>
             </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-600">{error}</p>
-              </div>
-            )}
 
             {/* File List */}
             {files.length > 0 && (
-              <div className="mt-8">
-                {files.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                  >
-                    <div 
-                      className="flex items-center flex-1 cursor-pointer hover:bg-gray-100 p-2 rounded"
-                      onClick={() => openFileInNewWindow(file)}
-                    >
-                      <FiFile className="text-2xl text-gray-400 mr-3" />
-                      <div>
-                        <p className="font-medium text-blue-600 hover:underline">
-                          {file.name}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          {(file.size / 1024 / 1024).toFixed(2)} MB
-                        </p>
-                      </div>
+              <div className="mt-4">
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center">
+                    <FiFile className="text-blue-600 mr-2" />
+                    <div>
+                      <p className="text-sm font-medium">{files[0].name}</p>
+                      <p className="text-xs text-gray-500">{files[0].size} MB</p>
                     </div>
-                    <button
-                      onClick={() => removeFile(index)}
-                      className="p-2 hover:bg-gray-200 rounded-full ml-4"
-                    >
-                      <FiX className="text-gray-500" />
-                    </button>
                   </div>
-                ))}
+                  <button
+                    onClick={removeFile}
+                    className="p-1 hover:bg-gray-200 rounded-full transition-colors"
+                  >
+                    <FiX className="text-gray-500" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -248,7 +209,7 @@ const ResumeUploader = () => {
           >
             {uploading ? (
               <>
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
                   <circle
                     className="opacity-25"
                     cx="12"
@@ -256,12 +217,12 @@ const ResumeUploader = () => {
                     r="10"
                     stroke="currentColor"
                     strokeWidth="4"
-                  ></circle>
+                  />
                   <path
                     className="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
+                  />
                 </svg>
                 <span>Analyzing...</span>
               </>

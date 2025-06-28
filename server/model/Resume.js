@@ -10,17 +10,30 @@ const ResumeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  content: {
+
+  jobDescription: {
     type: String,
-    required: false,
+    required: true,
   },
-  feedback: {
-    type: String,
-    default: "",
+  analysis: {
+    keywords: [
+      {
+        word: String,
+        count: Number,
+        matches: Boolean,
+      },
+    ],
+    missingKeywords: [String],
+    formatIssues: [String],
+    suggestions: [String],
   },
   matchScore: {
     type: Number,
     default: 0,
+  },
+  feedback: {
+    type: String,
+    default: "",
   },
   createdAt: {
     type: Date,

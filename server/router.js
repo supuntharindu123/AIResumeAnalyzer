@@ -12,7 +12,7 @@ import {
   getMe,
 } from "./controller/userController.js";
 import { protect } from "./middleware/auth.js";
-import { uploadResume } from "./controller/resumeController.js";
+import { analyzeResume, getResumeById } from "./controller/resumeController.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -25,7 +25,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post("/resume/upload", protect, upload.single("resume"), uploadResume);
+router.post("/resume/analyze", protect, upload.single("resume"), analyzeResume);
+router.get("/resume/:id", protect, getResumeById);
 
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);
