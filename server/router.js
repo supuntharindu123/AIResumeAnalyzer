@@ -17,6 +17,7 @@ import {
   getResumeById,
   getAllResumesByUser,
   getUserResumeStats,
+  deleteResume,
 } from "./controller/resumeController.js";
 
 const storage = multer.diskStorage({
@@ -34,6 +35,7 @@ router.post("/resume/analyze", protect, upload.single("resume"), analyzeResume);
 router.get("/resume/:id", protect, getResumeById);
 router.get("/resumes", protect, getAllResumesByUser);
 router.get("/resumes/stats", protect, getUserResumeStats);
+router.delete("/resume/:id", protect, deleteResume);
 
 router.post("/auth/register", registerUser);
 router.post("/auth/login", loginUser);

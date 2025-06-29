@@ -129,7 +129,9 @@ const Dashboard = () => {
         {/* Header */}
         <div className="mb-8">
           {/* <h1 className="text-4xl font-extrabold text-rose-700">Dashboard</h1> */}
-          <p className=" mt-2 text-xl">Welcome back, {user?.name}</p>
+          <p className=" mt-2 text-xl text-capitalize">
+            Welcome back, {user?.name}
+          </p>
         </div>
 
         {/* Quick Actions */}

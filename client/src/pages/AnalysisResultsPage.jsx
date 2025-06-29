@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AnalysisResults from "../component/AnalysisResults";
+import Image from "../assets/IMG03.jpg";
 
 const AnalysisResultsPage = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const AnalysisResultsPage = () => {
 
         const data = await response.json();
         setData(data);
+        console.log("Analysis Results Data:", data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -46,12 +48,13 @@ const AnalysisResultsPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <AnalysisResults
-        analysis={data.analysis}
-        matchScore={data.matchScore}
-        resumeData={data.structuredData}
-      />
+    <div
+      className=" mx-auto px-4 py-8 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+      }}
+    >
+      <AnalysisResults data={data} />
     </div>
   );
 };

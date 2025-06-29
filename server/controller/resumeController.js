@@ -252,3 +252,39 @@ export async function getUserResumeStats(req, res) {
     });
   }
 }
+
+export async function deleteResume(req, res) {
+  try {
+    const { id } = req.params;
+
+    const resume = await Resume.findById(id);
+    if (!resume) {
+      return res.status(404).json({ error: "Resume not found" });
+    }
+
+    if (resume.owner.toString() !== req.user.id.toString()) {
+      return res
+        .status(403)
+        .json({ error: "Not authorized to delete this resume" });
+    }
+
+    // Delete the file from the filesystem
+    const filePath = `uploads/${resume.fileName}`;
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
+    await Resume.deleteOne({ _id: id });
+
+    return res.status(200).json({
+      success: true,
+      message: "Resume deleted successfully",
+    });
+  } catch (err) {
+    console.error("Error deleting resume:", err);
+    return res.status(500).json({
+      error: "Failed to delete resume",
+      details: err.message,
+    });
+  }
+}

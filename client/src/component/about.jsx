@@ -1,82 +1,172 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  FiTarget,
+  FiUsers,
+  FiZap,
+  FiShield,
+  FiAward,
+  FiTrendingUp,
+  FiCheckCircle,
+  FiHeart,
+  FiGlobe,
+  FiStar,
+  FiCpu,
+  FiBookOpen,
+  FiMail,
+  FiLinkedin,
+  FiTwitter,
+} from "react-icons/fi";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="max-w-4xl mx-auto px-6">
+    <div className="min-h-screen bg-gradient-to-b from-gray-800 to-gray-500">
+      <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-rose-800 mb-6">
+          <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
             About AI Resume Analyzer
           </h1>
-          <p className="text-xl text-rose-700 leading-relaxed">
-            We're revolutionizing the way people optimize their resumes and
-            advance their careers through artificial intelligence.
+          <p className="text-xl lg:text-2xl text-rose-100 leading-relaxed max-w-4xl mx-auto">
+            Empowering careers through intelligent resume analysis and
+            optimization. We're bridging the gap between talent and opportunity
+            with cutting-edge AI technology.
           </p>
         </div>
 
-        {/* Mission Section */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
-          <h2 className="text-3xl font-bold text-rose-800 mb-6">Our Mission</h2>
-          <p className="text-lg text-rose-700 mb-6">
-            At AI Resume Analyzer, we believe everyone deserves a fair chance to
-            showcase their talents and land their dream job. Our mission is to
-            democratize access to professional resume optimization through
-            cutting-edge AI technology.
-          </p>
-          <div className="grid grid-cols-2 gap-8 mt-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-rose-600 mb-2">50K+</div>
-              <div className="text-rose-700">Resumes Analyzed</div>
+        {/* Mission & Vision */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-rose-300/30">
+            <div className="flex items-center mb-6">
+              <FiTarget className="text-3xl text-rose-100 hover:text-amber-100 transition-colors duration-300 mr-4" />
+              <h2 className="text-3xl font-bold text-white">Our Mission</h2>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-amber-600 mb-2">95%</div>
-              <div className="text-rose-700">Success Rate</div>
+            <p className="text-lg text-rose-100 mb-6 leading-relaxed">
+              To democratize access to professional resume optimization through
+              artificial intelligence, ensuring every job seeker has the tools
+              they need to present their best professional self and secure
+              meaningful employment opportunities.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center text-rose-100">
+                <FiCheckCircle className="text-green-400 mr-3 hover:text-amber-100 transition-colors duration-300" />
+                Make resume optimization accessible to everyone
+              </li>
+              <li className="flex items-center text-rose-100">
+                <FiCheckCircle className="text-green-400 mr-3 hover:text-amber-100 transition-colors duration-300" />
+                Reduce hiring bias through objective analysis
+              </li>
+              <li className="flex items-center text-rose-100">
+                <FiCheckCircle className="text-green-400 mr-3 hover:text-amber-100 transition-colors duration-300" />
+                Bridge the gap between talent and opportunity
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-8 border border-rose-300/30">
+            <div className="flex items-center mb-6">
+              <FiGlobe className="text-3xl text-rose-100 hover:text-amber-100 transition-colors duration-300 mr-4" />
+              <h2 className="text-3xl font-bold text-white">Our Vision</h2>
+            </div>
+            <p className="text-lg text-rose-100 mb-6 leading-relaxed">
+              A world where career advancement is based purely on merit and
+              potential, where every professional has access to intelligent
+              tools that help them showcase their unique value proposition to
+              employers.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center text-rose-100">
+                <FiStar className="text-amber-400 mr-3 hover:text-amber-100 transition-colors duration-300" />
+                Leading AI-powered career platform globally
+              </li>
+              <li className="flex items-center text-rose-100">
+                <FiStar className="text-amber-400 mr-3 hover:text-amber-100 transition-colors duration-300" />
+                Transforming how recruitment works
+              </li>
+              <li className="flex items-center text-rose-100">
+                <FiStar className="text-amber-400 mr-3 hover:text-amber-100 transition-colors duration-300" />
+                Creating equal opportunities for all
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* How It Works */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-white text-center mb-12">
+            How We're Different
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl shadow-lg text-center border border-rose-300/30 hover:bg-white/20 transition-all duration-300">
+              <div className="bg-rose-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FiCpu className="text-3xl text-rose-100 hover:text-amber-100 transition-colors duration-300" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4 text-white">
+                Advanced AI Technology
+              </h3>
+              <p className="text-rose-100 leading-relaxed">
+                Our proprietary algorithms use natural language processing and
+                machine learning to understand job requirements and match them
+                with resume content at a semantic level.
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl shadow-lg text-center border border-rose-300/30 hover:bg-white/20 transition-all duration-300">
+              <div className="bg-green-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FiZap className="text-3xl text-green-300 hover:text-amber-100 transition-colors duration-300" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4 text-white">
+                Real-Time Analysis
+              </h3>
+              <p className="text-rose-100 leading-relaxed">
+                Get instant, comprehensive feedback with detailed match scores,
+                keyword analysis, and actionable recommendations to improve your
+                resume's effectiveness.
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-xl shadow-lg text-center border border-rose-300/30 hover:bg-white/20 transition-all duration-300">
+              <div className="bg-blue-500/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FiShield className="text-3xl text-blue-300 hover:text-amber-100 transition-colors duration-300" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4 text-white">
+                Privacy & Security
+              </h3>
+              <p className="text-rose-100 leading-relaxed">
+                Your personal data is protected with enterprise-grade security.
+                We never store or share your resume content, ensuring complete
+                confidentiality.
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-3 text-rose-800">
-              AI-Powered Analysis
-            </h3>
-            <p className="text-rose-700">
-              Advanced algorithms analyze your resume for optimal job matching.
-            </p>
+        {/* Contact Section */}
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-8 mb-16 border border-rose-300/30">
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
+            Get In Touch
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8 text-center">
+            <div>
+              <FiMail className="text-3xl text-rose-100 hover:text-amber-100 transition-colors duration-300 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white mb-2">
+                Email Us
+              </h3>
+              <p className="text-rose-100">support@airesume.com</p>
+            </div>
+            <div>
+              <FiLinkedin className="text-3xl text-rose-100 hover:text-amber-100 transition-colors duration-300 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white mb-2">
+                LinkedIn
+              </h3>
+              <p className="text-rose-100">@ai-resume-analyzer</p>
+            </div>
+            <div>
+              <FiTwitter className="text-3xl text-rose-100 hover:text-amber-100 transition-colors duration-300 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white mb-2">Twitter</h3>
+              <p className="text-rose-100">@AIResumeAnalyzer</p>
+            </div>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-3 text-rose-800">
-              Instant Results
-            </h3>
-            <p className="text-rose-700">
-              Get comprehensive feedback and suggestions in seconds.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-3 text-rose-800">
-              Privacy First
-            </h3>
-            <p className="text-rose-700">
-              Your data is secure and processed with enterprise-grade security.
-            </p>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center bg-gradient-to-r from-rose-600 via-amber-600 to-amber-500 text-white p-8 rounded-xl shadow-lg">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl mb-6 text-amber-100">
-            Join thousands of professionals improving their careers with AI.
-          </p>
-          <Link
-            to="/upload-resume"
-            className="bg-amber-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-amber-300 transition duration-300 inline-block"
-          >
-            Analyze My Resume
-          </Link>
         </div>
       </div>
     </div>

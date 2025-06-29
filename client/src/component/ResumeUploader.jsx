@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUpload, FiFile, FiX, FiBriefcase, FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import Image from "../assets/IMG03.jpg";
 
 const ResumeUploader = () => {
   const [files, setFiles] = useState([]);
@@ -86,14 +87,19 @@ const ResumeUploader = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 p-6">
+    <div
+      className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 p-6 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+      }}
+    >
       <div className="max-w-5xl mx-auto">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-rose-600 mb-4">
+        <div className="text-start mb-12">
+          <h1 className="text-4xl font-extrabold text-gray-600 mb-4">
             Resume Match Analysis
           </h1>
-          <p className="text-lg text-rose-700">
+          <p className="text-lg text-gray-700">
             Upload your resume and job description to see how well they match
           </p>
         </div>
@@ -102,8 +108,8 @@ const ResumeUploader = () => {
           {/* Resume Upload */}
           <div className="bg-white rounded-xl shadow-xl p-8">
             <div className="flex items-center mb-6">
-              <FiFile className="text-2xl text-rose-600 mr-3" />
-              <h2 className="text-2xl font-semibold text-rose-700">
+              <FiFile className="text-2xl text-gray-600 mr-3" />
+              <h2 className="text-2xl font-semibold text-gray-700">
                 Upload Resume
               </h2>
             </div>
@@ -112,42 +118,42 @@ const ResumeUploader = () => {
               {...getRootProps()}
               className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
                 isDragActive
-                  ? "border-rose-400 bg-rose-50"
-                  : "border-rose-300 hover:border-rose-400"
+                  ? "border-gray-400 bg-gray-50"
+                  : "border-gray-300 hover:border-gray-400"
               }`}
             >
               <input {...getInputProps()} />
-              <FiUpload className="mx-auto text-3xl text-rose-300 mb-4" />
-              <p className="text-rose-600">
+              <FiUpload className="mx-auto text-3xl text-gray-300 mb-4" />
+              <p className="text-gray-600">
                 {isDragActive
                   ? "Drop your resume here"
                   : "Drag & drop your resume PDF, or click to select"}
               </p>
-              <p className="text-sm text-rose-400 mt-2">
+              <p className="text-sm text-gray-400 mt-2">
                 Maximum file size: 10MB
               </p>
             </div>
 
             {files.length > 0 && (
               <button onClick={openFileInBrowser} className="w-full mt-4">
-                <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg cursor-pointer hover:bg-rose-100 transition">
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition">
                   <div className="flex items-center">
-                    <FiFile className="text-rose-600 mr-2" />
+                    <FiFile className="text-gray-600 mr-2" />
                     <div>
-                      <p className="text-sm font-medium text-rose-700">
+                      <p className="text-sm font-medium text-gray-700">
                         {files[0].name}
                       </p>
-                      <p className="text-xs text-rose-400">
+                      <p className="text-xs text-gray-400">
                         {files[0].size} MB
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={removeFile}
-                    className="p-1 hover:bg-rose-200 rounded-full transition-colors"
+                    className="p-1 hover:bg-gray-200 rounded-full transition-colors"
                     aria-label="Remove file"
                   >
-                    <FiX className="text-rose-500" />
+                    <FiX className="text-gray-500" />
                   </button>
                 </div>
               </button>
@@ -157,8 +163,8 @@ const ResumeUploader = () => {
           {/* Job Description */}
           <div className="bg-white rounded-xl shadow-xl p-8">
             <div className="flex items-center mb-6">
-              <FiBriefcase className="text-2xl text-rose-600 mr-3" />
-              <h2 className="text-2xl font-semibold text-rose-700">
+              <FiBriefcase className="text-2xl text-gray-600 mr-3" />
+              <h2 className="text-2xl font-semibold text-gray-700">
                 Job Description
               </h2>
             </div>
@@ -168,9 +174,9 @@ const ResumeUploader = () => {
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 placeholder="Paste the job description here..."
-                className="w-full h-[300px] p-4 border-2 border-rose-200 rounded-lg focus:border-rose-500 focus:ring-rose-500 resize-none"
+                className="w-full h-[300px] p-4 border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:ring-gray-500 resize-none"
               />
-              <div className="absolute bottom-4 right-4 text-rose-400 text-sm select-none">
+              <div className="absolute bottom-4 right-4 text-gray-400 text-sm select-none">
                 {jobDescription.length} characters
               </div>
             </div>
@@ -179,8 +185,8 @@ const ResumeUploader = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="mt-6 p-4 bg-rose-100 border border-rose-300 rounded-lg">
-            <p className="text-rose-700">{error}</p>
+          <div className="mt-6 p-4 bg-gray-100 border border-gray-300 rounded-lg">
+            <p className="text-gray-700">{error}</p>
           </div>
         )}
 
@@ -189,10 +195,10 @@ const ResumeUploader = () => {
           <button
             onClick={handleSubmit}
             disabled={files.length === 0 || !jobDescription || uploading}
-            className={`px-8 py-4 rounded-xl flex items-center space-x-3 ${
+            className={`px-8 py-3 rounded-lg flex items-center space-x-3 ${
               files.length === 0 || !jobDescription || uploading
-                ? "bg-rose-200 cursor-not-allowed text-rose-400"
-                : "bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white shadow-lg transform transition hover:scale-105"
+                ? "bg-gradient-to-r from-gray-300 to-rose-300 cursor-not-allowed text-white"
+                : "bg-gradient-to-r from-gray-500 to-rose-500 hover:from-rose-600 hover:to-gray-600 text-white shadow-lg transform transition hover:scale-105"
             } font-medium text-lg`}
           >
             {uploading ? (
@@ -220,7 +226,7 @@ const ResumeUploader = () => {
             ) : (
               <>
                 <FiSearch className="text-xl" />
-                <span>Analyze Match</span>
+                <span>Analyze </span>
               </>
             )}
           </button>
