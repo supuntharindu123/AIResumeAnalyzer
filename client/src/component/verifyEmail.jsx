@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/authcontext";
 import { verifyEmailAction, resendOTPAction } from "../actions/authActions";
+import Image from "../assets/IMG06.jpg";
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -80,7 +81,12 @@ const VerifyEmail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div
+      className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+      }}
+    >
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-6 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -131,7 +137,7 @@ const VerifyEmail = () => {
               <button
                 type="submit"
                 disabled={loading || otp.some((digit) => !digit)}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-gray-500 to-rose-500 hover:from-rose-600 hover:to-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? "Verifying..." : "Verify Email"}
               </button>
@@ -142,7 +148,7 @@ const VerifyEmail = () => {
                 type="button"
                 onClick={handleResend}
                 disabled={timer > 0 || loading}
-                className="text-sm text-rose-600 hover:text-rose-500 disabled:text-gray-400"
+                className="text-sm text-gray-600 hover:text-rose-500 disabled:text-gray-400"
               >
                 {timer > 0
                   ? `Resend code in ${Math.floor(timer / 60)}:${(timer % 60)
@@ -168,7 +174,7 @@ const VerifyEmail = () => {
             <div className="mt-6 text-center">
               <Link
                 to="/login"
-                className="font-medium text-rose-600 hover:text-rose-500"
+                className="font-medium text-rose-600 hover:text-gray-500"
               >
                 Sign in to your account
               </Link>

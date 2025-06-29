@@ -25,14 +25,14 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-md">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-white shadow-md bg-gradient-to-b from-gray-300 to-white ">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-extrabold bg-gradient-to-r from-rose-500 to-amber-500 bg-clip-text text-transparent">
-                AI Resume
+              <span className="text-2xl font-extrabold bg-gradient-to-r from-gray-500 to-rose-500 bg-clip-text text-transparent">
+                Resume Analyzer
               </span>
             </Link>
           </div>
@@ -73,13 +73,13 @@ const Header = () => {
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="text-rose-600 hover:text-rose-700 font-medium px-3 py-2"
+                  className="text-gray-600 hover:text-rose-700 font-medium px-3 py-2"
                 >
-                  Login
+                  Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-amber-400 text-gray-900 px-4 py-2 rounded-md font-semibold hover:bg-amber-300 transition"
+                  className=" text-rose-700 px-4 py-2 rounded-md font-semibold hover:text-gray-500 transition"
                 >
                   Sign Up
                 </Link>

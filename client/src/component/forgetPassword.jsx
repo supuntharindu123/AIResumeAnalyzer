@@ -5,6 +5,7 @@ import {
   resendOTPAction,
   resetPasswordAction,
 } from "../actions/authActions";
+import Image from "../assets/IMG05.jpg";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -175,7 +176,7 @@ const ForgotPassword = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-gray-500 to-rose-500 hover:from-rose-600 hover:to-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
           >
             {loading ? "Resetting..." : "Reset Password"}
           </button>
@@ -209,7 +210,7 @@ const ForgotPassword = () => {
           <button
             type="submit"
             disabled={loading || otp.some((digit) => !digit)}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-gray-500 to-rose-500 hover:from-rose-600 hover:to-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
           >
             {loading ? "Verifying..." : "Verify Code"}
           </button>
@@ -254,7 +255,7 @@ const ForgotPassword = () => {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-gray-500 to-rose-500 hover:from-rose-600 hover:to-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
         >
           {loading ? "Sending..." : "Send Verification Code"}
         </button>
@@ -263,14 +264,19 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div
+      className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+      }}
+    >
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-          <div className="mb-6 text-center">
+        <div className="bg-white py-12 px-6 shadow rounded-lg sm:px-10">
+          <div className="mb-8 text-center">
             <h2 className="text-3xl font-extrabold text-gray-900">
               {getHeaderText()}
             </h2>
-            <p className="mt-2 text-sm text-gray-600">{getSubHeaderText()}</p>
+            <p className="mt-4 text-sm text-gray-600">{getSubHeaderText()}</p>
           </div>
           {error && (
             <div className="rounded-md bg-red-50 p-4 mb-4">

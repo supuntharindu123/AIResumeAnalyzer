@@ -3,6 +3,8 @@ import { FcGoogle } from "react-icons/fc";
 import { useAuth } from "../context/authcontext";
 import { GoogleLogin } from "@react-oauth/google";
 
+import Image from "../assets/Img05.jpg";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -44,7 +46,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-amber-50 px-4">
+    <div
+      className="min-h-screen flex items-center justify-center bg-gray-100 px-4 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+      }}
+    >
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Welcome Back
@@ -108,7 +115,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
+            className="w-full py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-gray-500 to-rose-500 hover:from-rose-600 hover:to-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 disabled:opacity-50"
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </button>

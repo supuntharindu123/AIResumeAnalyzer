@@ -5,7 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-br from-rose-500 to-amber-500 text-white">
+    <footer className="bg-gradient-to-b from-gray-700 to-rose-900 text-white">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -46,14 +46,17 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-amber-100 transition-colors">
+                <Link
+                  to="/"
+                  className="hover:text-gray-200 hover:underline transition-colors"
+                >
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   to="/dashboard"
-                  className="hover:text-amber-100 transition-colors"
+                  className="hover:text-gray-200 hover:underline  transition-colors"
                 >
                   Dashboard
                 </Link>
@@ -61,7 +64,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/upload-resume"
-                  className="hover:text-amber-100 transition-colors"
+                  className="hover:text-gray-200 hover:underline  transition-colors"
                 >
                   Upload Resume
                 </Link>
@@ -76,7 +79,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/faq"
-                  className="hover:text-amber-100 transition-colors"
+                  className="hover:text-gray-200 hover:underline  transition-colors"
                 >
                   FAQ
                 </Link>
@@ -84,7 +87,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/privacy"
-                  className="hover:text-amber-100 transition-colors"
+                  className="hover:text-gray-200 hover:underline  transition-colors"
                 >
                   Privacy Policy
                 </Link>
@@ -92,7 +95,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/terms"
-                  className="hover:text-amber-100 transition-colors"
+                  className="hover:text-gray-200 hover:underline  transition-colors"
                 >
                   Terms of Service
                 </Link>

@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import {
   FiUpload,
   FiFileText,
-  FiUsers,
-  FiActivity,
+  FiThumbsUp,
+  FiAlertTriangle,
+  FiThumbsDown,
   FiEye,
   FiClock,
 } from "react-icons/fi";
 import { useAuth } from "../context/authcontext";
 import { GetAllResume } from "../actions/resumeAction";
+import Image from "../assets/IMG05.jpg";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -65,8 +67,8 @@ const Dashboard = () => {
     <div className="bg-white rounded-xl shadow-lg p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-rose-500 text-sm">{title}</p>
-          <h3 className="text-3xl font-extrabold mt-2 text-rose-700">
+          <p className="text-gray-500 text-sm">{title}</p>
+          <h3 className="text-3xl font-extrabold mt-2 text-gray-700">
             {value}
           </h3>
         </div>
@@ -117,19 +119,24 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-amber-50 p-6">
+    <div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-rose-50 p-6 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+      }}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-extrabold text-rose-700">Dashboard</h1>
-          <p className="text-rose-600 mt-2">Welcome back, {user?.name}</p>
+          {/* <h1 className="text-4xl font-extrabold text-rose-700">Dashboard</h1> */}
+          <p className=" mt-2 text-xl">Welcome back, {user?.name}</p>
         </div>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Link
             to="/upload-resume"
-            className="bg-gradient-to-r from-rose-500 to-amber-500 text-white rounded-xl p-6 hover:from-rose-600 hover:to-amber-600 transition shadow-lg"
+            className="bg-gradient-to-r from-gray-600 to-rose-500 text-white rounded-xl p-6 hover:from-rose-600 hover:to-gray-600 transition shadow-lg"
           >
             <div className="flex items-center">
               <FiUpload className="text-3xl mr-4" />
@@ -144,7 +151,7 @@ const Dashboard = () => {
 
           <Link
             to="/my-reviews"
-            className="bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl p-6 hover:from-green-700 hover:to-green-600 transition shadow-lg"
+            className="bg-gradient-to-l from-gray-500 to-rose-500 text-white rounded-xl p-6 hover:from-rose-600 hover:to-gray-600 transition shadow-lg"
           >
             <div className="flex items-center">
               <FiFileText className="text-3xl mr-4" />
@@ -161,25 +168,25 @@ const Dashboard = () => {
           <DashboardCard
             title="Total Resumes"
             value={stats.totalResumes}
-            icon={<FiFileText className="text-3xl text-rose-600" />}
+            icon={<FiFileText className="text-3xl text-gray-600" />}
             color="text-rose-600"
           />
           <DashboardCard
             title="Good Resumes"
             value={stats.goodResume}
-            icon={<FiActivity className="text-3xl text-green-700" />}
+            icon={<FiThumbsUp className="text-3xl text-green-700" />}
             color="text-green-700"
           />
           <DashboardCard
             title="Fair Resumes"
             value={stats.fairResume}
-            icon={<FiUsers className="text-3xl text-yellow-600" />}
+            icon={<FiAlertTriangle className="text-3xl text-yellow-600" />}
             color="text-yellow-600"
           />
           <DashboardCard
             title="Poor Resumes"
             value={stats.poorResume}
-            icon={<FiUsers className="text-3xl text-red-700" />}
+            icon={<FiThumbsDown className="text-3xl text-red-700" />}
             color="text-red-700"
           />
         </div>
@@ -187,12 +194,12 @@ const Dashboard = () => {
         {/* Recent Activity */}
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-extrabold text-rose-700">
+            <h2 className="text-2xl font-extrabold text-gray-700">
               Recent Resume Activity
             </h2>
             <Link
               to="/my-reviews"
-              className="text-rose-600 hover:text-rose-800 text-sm font-semibold"
+              className="text-gray-600 hover:text-rose-800 text-sm font-semibold"
             >
               View All →
             </Link>
@@ -200,76 +207,70 @@ const Dashboard = () => {
 
           {loading ? (
             <div className="text-center py-4">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-rose-600 mx-auto"></div>
-              <p className="text-rose-500 mt-2">Loading...</p>
+              <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-gray-600 mx-auto"></div>
+              <p className="text-gray-500 mt-2">Loading...</p>
             </div>
           ) : stats.recentActivity.length > 0 ? (
-            <div className="space-y-5">
+            <div
+              className="space-y-5 bg-cover bg-center bg-no-repeat p-3"
+              style={{
+                backgroundImage: `linear-gradient(rgba(249, 250, 251, 0.9), rgba(254, 242, 242, 0.9)), url(${Image})`,
+              }}
+            >
               {stats.recentActivity.map((resume, index) => (
-                <div
-                  key={resume.id || index}
-                  className="border border-rose-200 rounded-xl p-5 hover:bg-rose-50 transition duration-200"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3">
-                        <FiFileText className="text-rose-300 text-2xl" />
-                        <div>
-                          <h3 className="font-semibold text-rose-700">
-                            {resume.fileName || "Unknown File"}
-                          </h3>
-                          <p className="text-sm text-rose-500 mt-1 line-clamp-2">
-                            {resume.jobDescription ||
-                              "No description available"}
-                          </p>
-                          <div className="flex items-center space-x-5 mt-2 text-xs text-rose-400">
-                            <span className="flex items-center">
-                              <FiClock className="mr-1" />
-                              Uploaded: {formatDate(resume.uploadDate)}
-                            </span>
-                            <span>{formatTimeAgo(resume.uploadDate)}</span>
-                            {resume.lastModified && (
-                              <span>
-                                Modified: {formatDate(resume.lastModified)}
+                <Link to={`/analysis/${resume.id}`}>
+                  <div
+                    key={resume.id || index}
+                    className="border border-gray-200 bg-white rounded-xl p-5 hover:bg-gray-100 transition duration-200 mb-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3">
+                          <FiFileText className="text-gray-300 text-2xl" />
+                          <div>
+                            <h3 className="font-semibold text-gray-700">
+                              {resume.fileName || "Unknown File"}
+                            </h3>
+                            <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                              {resume.jobDescription ||
+                                "No description available"}
+                            </p>
+                            <div className="flex items-center space-x-5 mt-2 text-xs text-gray-400">
+                              <span className="flex items-center">
+                                <FiClock className="mr-1" />
+                                Uploaded: {formatDate(resume.uploadDate)}
                               </span>
-                            )}
+                              <span>{formatTimeAgo(resume.uploadDate)}</span>
+                              {resume.lastModified && (
+                                <span>
+                                  Modified: {formatDate(resume.lastModified)}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center space-x-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(
-                          resume.matchScore
-                        )}`}
-                      >
-                        {resume.matchScore > 0
-                          ? `${resume.matchScore}% Match`
-                          : "Pending"}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs ${getStatusColor(
-                          resume.status
-                        )}`}
-                      >
-                        {resume.status || "Unknown"}
-                      </span>
-                      <Link
-                        to={`/analysis/${resume.id}`}
-                        className="flex items-center space-x-1 text-rose-600 hover:text-rose-800 text-sm font-medium"
-                      >
-                        <FiEye />
-                        <span>View</span>
-                      </Link>
+                      <div className="flex items-center space-x-4">
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm font-medium ${getScoreColor(
+                            resume.matchScore
+                          )}`}
+                        >
+                          {resume.matchScore > 0
+                            ? `${resume.matchScore}% Match`
+                            : "Pending"}
+                        </span>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs ${getStatusColor(
+                            resume.status
+                          )}`}
+                        >
+                          {resume.status || "Unknown"}
+                        </span>
+                      </div>
                     </div>
                   </div>
-
-                  {resume.owner && (
-                    <div className="mt-2 text-xs text-rose-400">
-                      Owner: {resume.owner.name} ({resume.owner.email})
-                    </div>
-                  )}
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
