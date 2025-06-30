@@ -21,8 +21,6 @@ import {
 import Image from "../assets/IMG05.jpg";
 
 const AnalysisResults = ({ data }) => {
-  console.log(`resumedata`, data);
-
   if (!data) {
     return (
       <div
@@ -45,6 +43,7 @@ const AnalysisResults = ({ data }) => {
   const {
     id,
     fileName,
+    fileOriginalName,
     uploadDate,
     owner,
     jobDescription,
@@ -53,6 +52,8 @@ const AnalysisResults = ({ data }) => {
     feedback,
     content,
   } = data;
+
+  console.log("fileOriginalName", fileOriginalName);
 
   // Helper function to get score color
   const getScoreColor = (score) => {
@@ -113,7 +114,7 @@ const AnalysisResults = ({ data }) => {
                     <h1 className="text-3xl font-bold text-gray-800 mb-2">
                       Resume Analysis Results
                     </h1>
-                    <p className="text-gray-600">{fileName}</p>
+                    <p className="text-gray-600">{fileOriginalName}</p>
                   </div>
                 </div>
 

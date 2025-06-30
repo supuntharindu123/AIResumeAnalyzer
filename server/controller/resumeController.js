@@ -121,6 +121,7 @@ export async function getResumeById(req, res) {
     const response = {
       id: resume._id,
       fileName: resume.fileName,
+      fileOriginalName: resume.fileOriginalName,
       uploadDate: resume.createdAt,
       owner: {
         name: resume.owner.name,

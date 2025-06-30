@@ -153,7 +153,7 @@ const Dashboard = () => {
 
           <Link
             to="/my-reviews"
-            className="bg-gradient-to-l from-gray-500 to-rose-500 text-white rounded-xl p-6 hover:from-rose-600 hover:to-gray-600 transition shadow-lg"
+            className="bg-gradient-to-l from-gray-600 to-rose-500 text-white rounded-xl p-6 hover:from-rose-600 hover:to-gray-600 transition shadow-lg"
           >
             <div className="flex items-center">
               <FiFileText className="text-3xl mr-4" />

@@ -96,7 +96,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-800 to-rose-800">
       {/* Hero Section with Slideshow */}
-      <section className="relative overflow-hidden text-white min-h-96">
+      <section className="relative overflow-hidden text-white min-h-96 py-10">
         {/* Background Image Slideshow */}
         <div className="absolute inset-0">
           {heroImages.map((image, index) => (

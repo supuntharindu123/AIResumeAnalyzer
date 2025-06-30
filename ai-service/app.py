@@ -75,15 +75,15 @@ def extract_keywords_from_text(text, nlp_model):
         if token.pos_ in ["NOUN", "PROPN"] and len(token.text) > 2 and not token.is_stop and token.is_alpha:
             keywords.add(token.text)
         # Add common programming languages/tools that might not be simple nouns
-        if token.text in ["python", "java", "javascript", "react", "node", "sql", "aws", "azure", "gcp", "docker", "kubernetes", "git", "linux", "agile", "scrum", "devops"]:
+        if token.text in ["python","django", "java", "javascript", "react", "node", "sql", "aws", "azure", "gcp", "docker", "kubernetes", "git", "linux","react.js", "agile", "scrum", "devops","back-end","front-end","vue","PostgreSQL","mysql","mongodb"]:
              keywords.add(token.text)
 
     # Clean and filter common non-skill words (expand this list!)
     common_words_to_exclude = {
-        "experience", "management", "project", "system", "data", "developer", "engineer",
-        "lead", "team", "bachelor", "master", "university", "college", "degree",
-        "certificate", "solution", "role", "work", "responsibilities", "skills",
-        "ability", "strong", "proven", "excellent", "knowledge", "understanding", "experience with"
+        "experience", "management", "project", "system", "data", "developer", "engineer","team members","enviroments","tests","test","service"
+        "lead", "team", "master", "university", "college","features","exam","examination", "certification", "certifications",
+        "solution", "role", "work", "responsibilities", "skills","new features","basic understanding","stand","knowledgeable", "expertise", "familiarity",
+        "ability", "strong", "proven", "excellent", "knowledge", "understanding", "experience with","institute","end","unit",
     }
     filtered_keywords = [
         kw for kw in sorted(list(keywords))
@@ -241,9 +241,10 @@ def check_contact_information(resume_text, text_lower):
     
     # Phone number check (various formats)
     phone_patterns = [
+         r'\(\+\d{1,3}\)\s\d{2}\s\d{7}',  # International format
         r'\+?\d{1,3}[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}',  # US format
         r'\+?\d{1,3}[-.\s]?\d{3,4}[-.\s]?\d{3,4}[-.\s]?\d{3,4}',  # International
-        r'\(\d{3}\)\s?\d{3}-?\d{4}'  # (123) 456-7890
+        r'\+\d{1,9}\s\d{9}' 
     ]
     
     phone_found = any(re.search(pattern, resume_text) for pattern in phone_patterns)
@@ -313,16 +314,16 @@ def check_content_quality(resume_text, text_lower):
         issues.append("Use more action verbs to describe accomplishments")
     
     # Check for quantifiable achievements
-    number_patterns = [
-        r'\d+%',  # Percentages
-        r'\$\d+',  # Dollar amounts
-        r'\d+\s*(million|thousand|k\b)',  # Large numbers
-        r'\d+\s*(years?|months?)'  # Time periods
-    ]
+    # number_patterns = [
+    #     r'\d+%',  # Percentages
+    #     r'\$\d+',  # Dollar amounts
+    #     r'\d+\s*(million|thousand|k\b)',  # Large numbers
+    #     r'\d+\s*(years?|months?)'  # Time periods
+    # ]
     
-    quantifiable_found = any(re.search(pattern, text_lower) for pattern in number_patterns)
-    if not quantifiable_found:
-        issues.append("Add quantifiable achievements (percentages, dollar amounts, time saved)")
+    # quantifiable_found = any(re.search(pattern, text_lower) for pattern in number_patterns)
+    # if not quantifiable_found:
+    #     issues.append("Add quantifiable achievements (percentages, dollar amounts, time saved)")
     
     return issues
 
@@ -388,7 +389,7 @@ def generate_format_suggestions(format_issues):
     
     issue_to_suggestion = {
         "Missing email address": "Add a professional email address at the top of your resume",
-        "Missing or improperly formatted phone number": "Include a phone number in format: (123) 456-7890",
+        "Missing or improperly formatted phone number": "Include a phone number in format: (+94) 784567890",
         "Consider adding LinkedIn profile": "Add your LinkedIn profile URL to increase professional visibility",
         "Missing Experience section": "Add a Work Experience section with your employment history",
         "Missing Education section": "Include an Education section with your academic qualifications",
@@ -601,7 +602,7 @@ def extract_experience_details(text):
     # Find common job titles
     job_title_patterns = [
         r'(senior|junior|lead|principal)?\s*(developer|engineer|manager|analyst|consultant|specialist|director)',
-        r'(software|web|data|system|project)\s*(developer|engineer|manager|analyst)'
+        r'(software|web|data|system|project|fullstack|frontend|backend|wordpress)\s*(developer|engineer|manager|analyst)'
     ]
     
     titles = []
@@ -637,10 +638,10 @@ def extract_skills_list(text):
     
     # Common technical skills
     common_skills = [
-        'python', 'java', 'javascript', 'react', 'node', 'sql', 'aws', 'azure',
-        'docker', 'kubernetes', 'git', 'linux', 'agile', 'scrum', 'html', 'css',
-        'mongodb', 'mysql', 'postgresql', 'redis', 'elasticsearch', 'tensorflow',
-        'pytorch', 'machine learning', 'data science', 'artificial intelligence'
+        'python', 'java', 'javascript', 'react', 'node', 'sql', 'aws', 'azure',  'mern','spring boot' ,'django','nextjs', 'vue','angular','.net','nodejs','expressjs',
+        'docker', 'kubernetes', 'git', 'linux', 'agile', 'scrum', 'html', 'css','flask','sonerqueue','selenium','php','laveral','c++','c','kotlin','react-native','flutter',
+        'mongodb', 'mysql', 'postgresql', 'redis', 'elasticsearch', 'tensorflow','powerbi','pandas','numpy','openai','wordpress','back-end',
+        'pytorch', 'machine learning', 'data science', 'artificial intelligence','REST API','javascript familiarity','database'
     ]
     
     found_skills = []

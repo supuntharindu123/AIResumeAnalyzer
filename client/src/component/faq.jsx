@@ -57,7 +57,7 @@ const FAQ = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-rose-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-amber-600 to-rose-600 text-white py-20">
+      <section className="bg-gradient-to-r from-gray-600 to-rose-600 text-white py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <FiHelpCircle className="text-6xl mx-auto mb-6 opacity-90" />
           <h1 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -66,22 +66,10 @@ const FAQ = () => {
           <p className="text-xl text-amber-100 mb-8">
             Find answers to common questions about AI Resume Analyzer
           </p>
-
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto relative">
-            <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
-            <input
-              type="text"
-              placeholder="Search for answers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 rounded-xl text-gray-800 text-lg focus:outline-none focus:ring-4 focus:ring-amber-300 shadow-lg"
-            />
-          </div>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Categories Sidebar */}
           <div className="lg:col-span-1">
